@@ -1,0 +1,34 @@
+<!-- res/layout/activity_add_subtask.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#D4E7C2">
+
+    <!-- Back button -->
+    <Button
+        android:id="@+id/back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#6A2A31"
+        android:text="Back" />
+
+    <!-- Subtask name input -->
+    <EditText
+        android:id="@+id/subtask_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Subtask Name"
+        android:inputType="text"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Create button -->
+    <Button
+        android:id="@+id/create_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="#6A2A31"
+        android:text="Create!"/>
+</LinearLayout>

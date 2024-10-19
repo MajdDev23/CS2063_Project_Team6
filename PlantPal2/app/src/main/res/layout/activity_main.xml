@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D4E7C2">
+
+    <!-- Customize Button -->
+    <Button
+        android:id="@+id/customize_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="16dp"
+        android:backgroundTint="#6A2A31"
+        android:text="Customize plant" />
+
+    <!-- Subtasks Button -->
+    <Button
+        android:id="@+id/subtasks_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:backgroundTint="#6A2A31"
+        android:text="Subtasks" />
+
+    <!-- Create New Task Button -->
+    <Button
+        android:id="@+id/newTask_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/plant_space"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#6A2A31"
+        android:text="Create a new Task" />
+
+    <!-- Camera Button -->
+    <Button
+        android:id="@+id/camera_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newTask_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#6A2A31"
+        android:text="Camera" />
+
+    <!-- Placeholder for the Plant (Initially empty) -->
+    <ImageView
+        android:id="@+id/plant_space"
+        android:layout_width="280dp"
+        android:layout_height="281dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/plant_space" />
+
+</RelativeLayout>
