@@ -25,7 +25,7 @@
         <activity android:name=".SubtasksActivity" />
         <activity android:name=".TaskManagerActivity" />
         <activity android:name=".CreateSubtaskActivity" />
-
+        <activity android:name=".CameraActivity" />
     </application>
 
 </manifest>

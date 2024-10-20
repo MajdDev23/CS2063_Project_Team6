@@ -31,5 +31,11 @@ class MainActivity : AppCompatActivity() {
             val taskManagerIntent = Intent(this, TaskManagerActivity::class.java)
             startActivity(taskManagerIntent)
         }
+
+        val cameraActivityButton = findViewById<Button>(R.id.camera_btn)
+        newTaskButton.setOnClickListener {
+            val cameraActivityIntent = Intent(this, CameraActivity::class.java)
+            startActivity(cameraActivityIntent)
+        }
     }
 }
