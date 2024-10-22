@@ -11,16 +11,11 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
-import java.io.File
-import java.io.IOException
-import java.util.Date
 
 class CameraActivity: AppCompatActivity() {
 
-     override onCreate(savedInstanceState: Bundle?) {
-
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
 
 

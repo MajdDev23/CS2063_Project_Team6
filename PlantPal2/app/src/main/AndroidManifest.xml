@@ -5,6 +5,8 @@
         android:required="true" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -29,6 +31,7 @@
         <activity android:name=".TaskManagerActivity" />
         <activity android:name=".CreateSubtaskActivity" />
         <activity android:name=".CameraActivity" />
+        <activity android:name=".CreateTaskActivity"/>
     </application>
 
 </manifest>

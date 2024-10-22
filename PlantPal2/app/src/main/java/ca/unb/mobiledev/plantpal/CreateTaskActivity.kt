@@ -7,31 +7,31 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 
-class CreateSubtaskActivity : AppCompatActivity() {
-
+class CreateTaskActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.create_subtask)
+        setContentView(R.layout.create_task)
 
         // Find the views
-        val subtaskNameEditText = findViewById<EditText>(R.id.subtask_text)
-        val createButton = findViewById<Button>(R.id.create_btn)
+        val TaskNameEditText = findViewById<EditText>(R.id.task_name_text)
+        val createButton = findViewById<Button>(R.id.btn_create_task)
 
-        // Set up the "create" button to return the subtask name to SubtasksActivity
+        // Set up the "create" button to return the subtask name to TaskManagerActivity
         createButton.setOnClickListener {
-            val subtaskName = subtaskNameEditText.text.toString()
-            if (subtaskName.isNotEmpty()) {
+            val taskName = TaskNameEditText.text.toString()
+            if (taskName.isNotEmpty()) {
                 val resultIntent = Intent()
-                resultIntent.putExtra("SUBTASK_NAME", subtaskName)
+                resultIntent.putExtra("TASK_NAME", taskName)
                 setResult(Activity.RESULT_OK, resultIntent)
                 finish()
             }
         }
         // Set up the back button to finish the activity
-        val backButton = findViewById<Button>(R.id.back_btn)
+        val backButton = findViewById<Button>(R.id.home_btn)
         backButton.setOnClickListener {
-            val backIntent = Intent(this, SubtasksActivity::class.java)
+            val backIntent = Intent(this, TaskManagerActivity::class.java)
             startActivity(backIntent)
         }
     }
+
 }
