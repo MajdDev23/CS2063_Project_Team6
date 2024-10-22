@@ -1,59 +1,28 @@
 package ca.unb.mobiledev.plantpal
 
+import android.content.Intent
+import android.icu.text.SimpleDateFormat
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
+import android.widget.Button
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import java.io.File
+import java.io.IOException
+import java.util.Date
 
-class CameraActivity {
+class CameraActivity: AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        class CameraActivity : AppCompatActivity() {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.camera_btn)
+     override onCreate(savedInstanceState: Bundle?) {
 
-
-                // Register the activity listener
-                setCameraActivityResultLauncher()
-
-                val camButton = findViewById<Button>(R.id.camButton)
-
-                camButton.setOnClickListener {
-                    dispatchTakePictureIntent()
-                }
-        }
 
     }
 
-
-
-    private fun dispatchTakePictureIntent() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            // Ensure that there's a camera activity to handle the intent
-            takePictureIntent.resolveActivity(packageManager)?.also {
-                // Create the File where the photo should go
-                val photoFile: File? = try {
-                    createImageFile()
-                } catch (ex: IOException) {
-                    // Error occurred while creating the File
-
-                    null
-                }
-                // Continue only if the File was successfully created
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    cameraActivityResultLauncher!!.launch(takePictureIntent)
-                }
-            }
-        }
-    private fun setCameraActivityResultLauncher() {
-        // Handle the image capture result
-        // TODO - Implement later
-        cameraActivityResultLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result: ActivityResult ->
-            if (result.resultCode == RESULT_OK) {
-                galleryAddPic()
-            }
-        }
-
-    }
 
 }
 
