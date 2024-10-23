@@ -11,7 +11,7 @@
         android:id="@+id/back_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#6A2A31"
+        android:backgroundTint="#4A8C61"
         android:text="Back" />
 
     <!-- Subtask name input -->
@@ -21,7 +21,9 @@
         android:layout_height="wrap_content"
         android:hint="Enter Subtask Name"
         android:inputType="text"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:textColor="#4A8C61"
+        android:textColorHint="#4A8C61"/>
 
     <!-- Create button -->
     <Button
@@ -29,6 +31,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:backgroundTint="#6A2A31"
+        android:backgroundTint="#4A8C61"
         android:text="Create!"/>
 </LinearLayout>
