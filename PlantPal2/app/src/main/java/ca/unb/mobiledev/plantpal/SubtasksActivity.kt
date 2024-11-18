@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 
@@ -24,6 +25,10 @@ class SubtasksActivity : AppCompatActivity() {
                 adapter.notifyDataSetChanged() // Update the ListView
             }
         }
+        val text = "Subtask added."
+        val duration = Toast.LENGTH_SHORT
+        val toast = Toast.makeText(this,text,duration)
+        toast.show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
