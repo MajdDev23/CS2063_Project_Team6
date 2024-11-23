@@ -17,12 +17,23 @@
         android:text="Home"
         android:textColor="#F8F4F4"/>
 
+    <!-- Delete Button -->
+    <Button
+        android:id="@+id/delete_task_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="#ff4a4a"
+        android:text="Delete Checked Tasks"
+        android:textColor="#FFFFFF" />
+
     <!-- List of tasks -->
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tasks_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="#4A8C61"/>
 
     <!-- Button to create a new task -->
     <Button
@@ -33,4 +44,5 @@
         android:backgroundTint="#4A8C61"
         android:text="New Task"
         android:textColor="#F8F4F4"/>
+
 </LinearLayout>

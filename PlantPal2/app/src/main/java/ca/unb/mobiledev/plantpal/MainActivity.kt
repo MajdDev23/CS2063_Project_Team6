@@ -18,12 +18,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(customizeIntent)
         }
 
-        // Navigate to the subtasks screen
-        val subtasksButton = findViewById<Button>(R.id.subtasks_btn)
-        subtasksButton.setOnClickListener {
-            val subtasksIntent = Intent(this, SubtasksActivity::class.java)
-            startActivity(subtasksIntent)
-        }
 
         // Navigate to the task manager screen
         val newTaskButton = findViewById<Button>(R.id.newTask_btn)

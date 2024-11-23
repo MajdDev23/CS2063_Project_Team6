@@ -1,5 +1,6 @@
 package ca.unb.mobiledev.plantpal
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -8,12 +9,14 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class TaskManagerActivity : AppCompatActivity() {
     private val taskList = mutableListOf<String>()
-    private lateinit var adapter: ArrayAdapter<String>
+    private lateinit var adapter: TaskAdapter
 
-
+    @SuppressLint("NotifyDataSetChanged")
     private val addTaskLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -21,31 +24,46 @@ class TaskManagerActivity : AppCompatActivity() {
             val newTaskName = result.data?.getStringExtra("TASK_NAME")
             newTaskName?.let {
                 taskList.add(it)
-                adapter.notifyDataSetChanged() // Update the ListView
+                adapter.notifyDataSetChanged()
             }
         }
-        val text = "Task added."
-        val duration = Toast.LENGTH_SHORT
-        val toast = Toast.makeText(this,text,duration)
-        toast.show()
-
+        Toast.makeText(this, "Task added.", Toast.LENGTH_SHORT).show()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_manager)
 
-        // Set up the ListView and Adapter
-        val taskListView = findViewById<ListView>(R.id.tasks_list)
-        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, taskList)
-        taskListView.adapter = adapter
 
-        // Set up the button to create a new task
+        val recyclerView = findViewById<RecyclerView>(R.id.tasks_list)
+
+        //When the user clicks a task name, it redirects them to the subtask creation page
+        adapter = TaskAdapter(taskList) { taskName ->
+            // Navigate to SubtasksActivity with the task name
+            val intent = Intent(this, SubtasksActivity::class.java)
+            intent.putExtra("TASK_NAME", taskName)
+            startActivity(intent)
+        }
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
         val createTaskButton = findViewById<Button>(R.id.create_task_btn)
         createTaskButton.setOnClickListener {
             val createTaskIntent = Intent(this, CreateTaskActivity::class.java)
             addTaskLauncher.launch(createTaskIntent)
         }
-        // Back to Main screen
+
+        val deleteTaskButton = findViewById<Button>(R.id.delete_task_btn)
+        deleteTaskButton.setOnClickListener {
+            val selectedCount = adapter.getSelectedTaskCount()
+            if (selectedCount == 0) {
+                Toast.makeText(this, "No tasks selected!", Toast.LENGTH_SHORT).show()
+            } else {
+                adapter.deleteSelectedTasks()
+                Toast.makeText(this, "Tasks deleted!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         val backButton = findViewById<Button>(R.id.home_btn)
         backButton.setOnClickListener {
             val backIntent = Intent(this, MainActivity::class.java)
@@ -53,6 +71,4 @@ class TaskManagerActivity : AppCompatActivity() {
             moveTaskToBack(false)
         }
     }
-
-
 }
