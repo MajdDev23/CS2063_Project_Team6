@@ -3,13 +3,6 @@
     android:layout_height="match_parent"
     android:background="#a7d9a6">
 
-    <!-- List of tasks -->
-    <ListView
-        android:id="@+id/tasks_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
     <!-- Back to Main Button -->
     <Button
         android:id="@+id/home_btn"
@@ -22,39 +15,49 @@
         android:text="Back"
         android:textColor="#F8F4F4"/>
 
+    <!-- Due Date Button -->
+    <Button
+        android:id="@+id/select_due_date_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_btn"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#4A8C61"
+        android:text="Select Due Date"
+        android:textColor="#F8F4F4" />
+
+    <!-- Due Date Display -->
+    <TextView
+        android:id="@+id/due_date_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/select_due_date_btn"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="No date selected"
+        android:textSize="16sp"
+        android:textColor="#4A8C61" />
+
     <!-- Task Name Input -->
     <EditText
         android:id="@+id/task_name_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/due_date_display"
+        android:layout_margin="16dp"
         android:hint="Task Name"
-        android:layout_below="@id/home_btn"
-        android:layout_margin="16dp"
         android:textColor="#4A8C61"
-        android:textColorHint="#4A8C61"/>
+        android:textColorHint="#4A8C61" />
 
-
-    <!-- Due Date Input -->
-    <EditText
-        android:id="@+id/due_date_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Due Date"
-        android:layout_below="@id/task_name_text"
-        android:layout_margin="16dp"
-        android:textColor="#4A8C61"
-        android:textColorHint="#4A8C61"/>
-
-
-
-    <!-- Placeholder for plant image -->
+    <!-- Plant Image -->
     <ImageView
         android:id="@+id/task_plant"
         android:layout_width="274dp"
         android:layout_height="320dp"
-        android:layout_below="@+id/due_date_text"
+        android:layout_below="@id/task_name_text"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/plant_image" />
 
     <!-- Create Task Button -->
@@ -67,6 +70,5 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="#4A8C61"
         android:text="Create new task"
-        android:textColor="#F8F4F4"/>
+        android:textColor="#F8F4F4" />
 </RelativeLayout>
-

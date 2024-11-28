@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 class TaskManagerActivity : AppCompatActivity() {
     private val taskList = mutableListOf<String>()
     private lateinit var adapter: TaskAdapter
+    private var selectedPlantResId: Int? = null
 
     @SuppressLint("NotifyDataSetChanged")
     private val addTaskLauncher = registerForActivityResult(
@@ -22,10 +23,14 @@ class TaskManagerActivity : AppCompatActivity() {
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             val newTaskName = result.data?.getStringExtra("TASK_NAME")
+            val plantImageResId = result.data?.getIntExtra("PLANT_IMAGE", R.drawable.plant_image)
             newTaskName?.let {
                 taskList.add(it)
                 adapter.notifyDataSetChanged()
             }
+            val mainIntent = Intent()
+            mainIntent.putExtra("PLANT_IMAGE", plantImageResId)
+            setResult(RESULT_OK, mainIntent)
         }
         Toast.makeText(this, "Task added.", Toast.LENGTH_SHORT).show()
     }
@@ -67,6 +72,8 @@ class TaskManagerActivity : AppCompatActivity() {
         val backButton = findViewById<Button>(R.id.home_btn)
         backButton.setOnClickListener {
             val backIntent = Intent(this, MainActivity::class.java)
+            backIntent.putExtra("PLANT_IMAGE", selectedPlantResId)
+            setResult(RESULT_OK, backIntent)
             startActivity(backIntent)
             moveTaskToBack(false)
         }

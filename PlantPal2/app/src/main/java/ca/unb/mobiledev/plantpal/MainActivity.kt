@@ -4,10 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
+import android.widget.ImageView
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        const val TASK_MANAGER_REQUEST_CODE = 1
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -23,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         val newTaskButton = findViewById<Button>(R.id.newTask_btn)
         newTaskButton.setOnClickListener {
             val taskManagerIntent = Intent(this, TaskManagerActivity::class.java)
-            startActivity(taskManagerIntent)
+            startActivityForResult(taskManagerIntent, TASK_MANAGER_REQUEST_CODE)
         }
 
         val cameraActivityButton = findViewById<Button>(R.id.camera_btn)
@@ -32,4 +38,17 @@ class MainActivity : AppCompatActivity() {
             startActivity(cameraActivityIntent)
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == TASK_MANAGER_REQUEST_CODE && resultCode == RESULT_OK) {
+            val plantImageResId = data?.getIntExtra("PLANT_IMAGE", R.drawable.plant_image)
+            plantImageResId?.let {
+                val plantImageView = findViewById<ImageView>(R.id.plant_space) // Ensure this matches your XML
+                plantImageView.setImageResource(it)
+            }
+        }
+    }
+
+
 }
