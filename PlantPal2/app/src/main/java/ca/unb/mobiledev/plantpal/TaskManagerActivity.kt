@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+
 class TaskManagerActivity : AppCompatActivity() {
     private val taskList = mutableListOf<String>()
     private lateinit var adapter: TaskAdapter
@@ -27,12 +28,18 @@ class TaskManagerActivity : AppCompatActivity() {
             newTaskName?.let {
                 taskList.add(it)
                 adapter.notifyDataSetChanged()
+                val text = "Task added."
+                val duration = Toast.LENGTH_SHORT
+                val toast = Toast.makeText(this,text,duration)
+                toast.show()
             }
             val mainIntent = Intent()
             mainIntent.putExtra("PLANT_IMAGE", plantImageResId)
             setResult(RESULT_OK, mainIntent)
         }
         Toast.makeText(this, "Task added.", Toast.LENGTH_SHORT).show()
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,4 +85,5 @@ class TaskManagerActivity : AppCompatActivity() {
             moveTaskToBack(false)
         }
     }
+
 }

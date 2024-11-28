@@ -26,6 +26,10 @@ class SubtasksActivity : AppCompatActivity() {
             newSubtaskName?.let {
                 subtaskList.add(it)
                 adapter.notifyDataSetChanged()
+                val text = "Subtask added."
+                val duration = Toast.LENGTH_SHORT
+                val toast = Toast.makeText(this,text,duration)
+                toast.show()
             }
             Toast.makeText(this, "Subtask added.", Toast.LENGTH_SHORT).show()
         }
