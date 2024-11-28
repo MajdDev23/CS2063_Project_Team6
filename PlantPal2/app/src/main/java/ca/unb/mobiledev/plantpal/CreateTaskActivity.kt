@@ -51,10 +51,12 @@ class CreateTaskActivity : AppCompatActivity() {
         createButton.setOnClickListener {
             val taskName = taskNameEditText.text.toString()
             if (taskName.isNotEmpty() && selectedDueDate != null) {
+                val currentDate = System.currentTimeMillis()
                 val resultIntent = Intent().apply {
                     putExtra("TASK_NAME", taskName)
-                    putExtra("PLANT_IMAGE", selectedPlantResId) // Pass plant image resource ID
-                    putExtra("DUE_DATE", selectedDueDate) // Pass the selected due date
+                    putExtra("PLANT_IMAGE", selectedPlantResId)
+                    putExtra("CREATION_DATE", currentDate)
+                    putExtra("DUE_DATE", selectedDueDate)
                 }
                 setResult(Activity.RESULT_OK, resultIntent)
                 finish()
@@ -64,6 +66,7 @@ class CreateTaskActivity : AppCompatActivity() {
                 }
             }
         }
+
 
         // Back button to return to TaskManagerActivity
         val backButton = findViewById<Button>(R.id.home_btn)
