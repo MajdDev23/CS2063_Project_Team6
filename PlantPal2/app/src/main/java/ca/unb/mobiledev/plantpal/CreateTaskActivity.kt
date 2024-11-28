@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import android.app.DatePickerDialog
+import android.content.Context
 import android.widget.TextView
 import java.util.Calendar
 
@@ -52,6 +53,10 @@ class CreateTaskActivity : AppCompatActivity() {
             val taskName = taskNameEditText.text.toString()
             if (taskName.isNotEmpty() && selectedDueDate != null) {
                 val currentDate = System.currentTimeMillis()
+
+                // nick add
+                saveTaskToSharedPreferences(taskName, selectedDueDate!!)
+
                 val resultIntent = Intent().apply {
                     putExtra("TASK_NAME", taskName)
                     putExtra("PLANT_IMAGE", selectedPlantResId)
@@ -67,11 +72,28 @@ class CreateTaskActivity : AppCompatActivity() {
             }
         }
 
-
         // Back button to return to TaskManagerActivity
         val backButton = findViewById<Button>(R.id.home_btn)
         backButton.setOnClickListener {
             finish()
         }
+    }
+
+    private fun saveTaskToSharedPreferences(taskName: String, dueDate: String) {
+        val sharedPreferences = getSharedPreferences("TaskPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        val savedTasks = sharedPreferences.getString("TASK_LIST", null)
+        val taskList = mutableListOf<String>()
+
+        if (savedTasks != null) {
+            taskList.addAll(savedTasks.split(";").filter { it.isNotBlank() })
+        }
+
+        val newTask = "$taskName|$dueDate"
+        taskList.add(newTask)
+
+        editor.putString("TASK_LIST", taskList.joinToString(";"))
+        editor.apply()
     }
 }
