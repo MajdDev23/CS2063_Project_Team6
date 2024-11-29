@@ -14,6 +14,26 @@
         android:backgroundTint="#4A8C61"
         android:text="Home"
         android:textColor="#F8F4F4"/>
+    <TextView
+        android:id="@+id/coming_soon_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_centerInParent="true"
+        android:text="Coming Soon"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#4A8C61" />
+
+    <ImageView
+        android:id="@+id/coming_soon_image"
+        android:layout_width="198dp"
+        android:layout_height="183dp"
+        android:layout_below="@id/coming_soon_text"
+        android:layout_alignRight="@id/coming_soon_text"
+        android:layout_marginRight="-48dp"
+        android:contentDescription="Coming Soon Image"
+        android:src="@drawable/shush" />
 
     <!-- Placeholder for customization options -->
 </RelativeLayout>
