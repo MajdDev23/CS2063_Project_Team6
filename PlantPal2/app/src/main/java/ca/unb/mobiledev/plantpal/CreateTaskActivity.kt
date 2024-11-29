@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.widget.TextView
 import java.util.Calendar
@@ -15,6 +16,7 @@ import java.util.Calendar
 class CreateTaskActivity : AppCompatActivity() {
     private var selectedPlantResId: Int = R.drawable.plant_image // Default plant image
     private var selectedDueDate: String? = null // Store the selected due date
+    private var selectedTimer: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +27,8 @@ class CreateTaskActivity : AppCompatActivity() {
         val createButton = findViewById<Button>(R.id.btn_create_task)
         val selectDueDateButton = findViewById<Button>(R.id.select_due_date_btn)
         val dueDateDisplay = findViewById<TextView>(R.id.due_date_display)
-
+        val selectTimerButton = findViewById<Button>(R.id.select_timer_btn)
+        val timerDisplay = findViewById<TextView>(R.id.timer_display)
         // Set up "Select Due Date" button
         selectDueDateButton.setOnClickListener {
             // Get the current date
@@ -47,7 +50,24 @@ class CreateTaskActivity : AppCompatActivity() {
             )
             datePicker.show()
         }
+        selectTimerButton.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
 
+            val timePicker = TimePickerDialog(
+                this,
+                { _, selectedHour, selectedMinute ->
+                    val formattedTime = formatTime(selectedHour, selectedMinute)
+                    selectedTimer = formattedTime
+                    timerDisplay.text = "Timer: $selectedTimer"
+                },
+                hour,
+                minute,
+                false // Use false for 12-hour format, true for 24-hour format
+            )
+            timePicker.show()
+        }
         // Set up "Create Task" button
         createButton.setOnClickListener {
             val taskName = taskNameEditText.text.toString()
@@ -77,6 +97,12 @@ class CreateTaskActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
+    }
+
+    private fun formatTime(hour: Int, minute: Int): String {
+        val amPm = if (hour < 12) "AM" else "PM"
+        val adjustedHour = if (hour % 12 == 0) 12 else hour % 12
+        return String.format("%d:%02d %s", adjustedHour, minute, amPm)
     }
 
     private fun saveTaskToSharedPreferences(taskName: String, dueDate: String) {

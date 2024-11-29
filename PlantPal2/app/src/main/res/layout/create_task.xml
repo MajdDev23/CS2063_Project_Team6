@@ -13,38 +13,74 @@
         android:layout_margin="16dp"
         android:backgroundTint="#4A8C61"
         android:text="Back"
-        android:textColor="#F8F4F4"/>
+        android:textColor="#F8F4F4" />
 
-    <!-- Due Date Button -->
-    <Button
-        android:id="@+id/select_due_date_btn"
+    <!-- Buttons Row: Due Date and Timer -->
+    <LinearLayout
+        android:id="@+id/date_timer_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/home_btn"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="#4A8C61"
-        android:text="Select Due Date"
-        android:textColor="#F8F4F4" />
+        android:orientation="horizontal">
 
-    <!-- Due Date Display -->
-    <TextView
-        android:id="@+id/due_date_display"
+        <!-- Due Date Button -->
+        <Button
+            android:id="@+id/select_due_date_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#4A8C61"
+            android:text="Select Due Date"
+            android:textColor="#F8F4F4" />
+
+        <!-- Timer Button -->
+        <Button
+            android:id="@+id/select_timer_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:backgroundTint="#4A8C61"
+            android:text="Select Timer"
+            android:textColor="#F8F4F4" />
+    </LinearLayout>
+
+    <!-- Text Row: Due Date and Timer -->
+    <LinearLayout
+        android:id="@+id/date_timer_texts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/select_due_date_btn"
+        android:layout_below="@id/date_timer_buttons"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="No date selected"
-        android:textSize="16sp"
-        android:textColor="#4A8C61" />
+        android:orientation="horizontal">
+
+        <!-- Due Date Display -->
+        <TextView
+            android:id="@+id/due_date_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No date selected"
+            android:textSize="16sp"
+            android:textColor="#4A8C61" />
+
+        <!-- Timer Display -->
+        <TextView
+            android:id="@+id/timer_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Timer: Not Set"
+            android:textSize="16sp"
+            android:textColor="#4A8C61" />
+    </LinearLayout>
 
     <!-- Task Name Input -->
     <EditText
         android:id="@+id/task_name_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/due_date_display"
+        android:layout_below="@id/date_timer_texts"
         android:layout_margin="16dp"
         android:hint="Task Name"
         android:textColor="#4A8C61"
