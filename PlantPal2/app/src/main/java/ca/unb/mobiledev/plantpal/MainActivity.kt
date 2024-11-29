@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -80,6 +81,8 @@ class MainActivity : AppCompatActivity() {
             handler.postDelayed({
                 plantImageView.setImageResource(R.drawable.plant_alt3) // Update to wilting stage
             }, finalMilestone)
+
+
         }
     }
 

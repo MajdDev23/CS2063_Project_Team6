@@ -1,6 +1,7 @@
 package ca.unb.mobiledev.plantpal
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -32,6 +33,8 @@ class TaskManagerActivity : AppCompatActivity() {
                 val duration = Toast.LENGTH_SHORT
                 val toast = Toast.makeText(this,text,duration)
                 toast.show()
+
+                saveTasks()
             }
             val mainIntent = Intent()
             mainIntent.putExtra("PLANT_IMAGE", plantImageResId)
@@ -46,6 +49,7 @@ class TaskManagerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_manager)
 
+        loadTasks()
 
         val recyclerView = findViewById<RecyclerView>(R.id.tasks_list)
 
@@ -72,6 +76,8 @@ class TaskManagerActivity : AppCompatActivity() {
                 Toast.makeText(this, "No tasks selected!", Toast.LENGTH_SHORT).show()
             } else {
                 adapter.deleteSelectedTasks()
+
+                saveTasks()
                 Toast.makeText(this, "Tasks deleted!", Toast.LENGTH_SHORT).show()
             }
         }
@@ -86,4 +92,19 @@ class TaskManagerActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun saveTasks() {
+        val sharedPreferences = getSharedPreferences("TaskPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("TASK_LIST", taskList.joinToString(";"))
+        editor.apply()
+    }
+
+    private fun loadTasks() {
+        val sharedPreferences = getSharedPreferences("TaskPrefs", Context.MODE_PRIVATE)
+        val savedTasks = sharedPreferences.getString("TASK_LIST", null)
+        if (savedTasks != null) {
+            taskList.addAll(savedTasks.split(";").filter { it.isNotBlank() })
+        }
+    }
 }

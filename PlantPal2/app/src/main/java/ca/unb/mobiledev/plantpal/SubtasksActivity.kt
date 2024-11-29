@@ -1,5 +1,6 @@
 package ca.unb.mobiledev.plantpal
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -38,7 +39,7 @@ class SubtasksActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subtasks)
-
+        loadSubTasks()
         val taskName = intent.getStringExtra("TASK_NAME")
         val titleTextView = findViewById<TextView>(R.id.subtask_title)
         titleTextView.text = "Subtasks for: $taskName"
@@ -64,7 +65,23 @@ class SubtasksActivity : AppCompatActivity() {
 
         val backButton = findViewById<Button>(R.id.home_btn)
         backButton.setOnClickListener {
+            saveSubTasks()
             finish()
+        }
+    }
+
+    private fun saveSubTasks() {
+        val sharedPreferences = getSharedPreferences("SubTaskPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("SUBTASK_LIST", subtaskList.joinToString(";"))
+        editor.apply()
+    }
+
+    private fun loadSubTasks() {
+        val sharedPreferences = getSharedPreferences("SubTaskPrefs", Context.MODE_PRIVATE)
+        val savedSubTasks = sharedPreferences.getString("SUBTASK_LIST", null)
+        if (savedSubTasks != null) {
+            subtaskList.addAll(savedSubTasks.split(";").filter { it.isNotBlank() })
         }
     }
 }
