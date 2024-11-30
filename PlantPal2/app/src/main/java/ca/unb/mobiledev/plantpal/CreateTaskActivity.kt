@@ -11,12 +11,14 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.widget.TextView
+import androidx.compose.ui.text.intl.Locale
+import java.text.SimpleDateFormat
 import java.util.Calendar
 
 class CreateTaskActivity : AppCompatActivity() {
     private var selectedPlantResId: Int = R.drawable.plant_image // Default plant image
     private var selectedDueDate: String? = null // Store the selected due date
-    private var selectedTimer: String? = null
+    private var selectedTimer: String? = null // Store the selected time
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +31,8 @@ class CreateTaskActivity : AppCompatActivity() {
         val dueDateDisplay = findViewById<TextView>(R.id.due_date_display)
         val selectTimerButton = findViewById<Button>(R.id.select_timer_btn)
         val timerDisplay = findViewById<TextView>(R.id.timer_display)
-        // Set up "Select Due Date" button
+
+        // Sets up the button to select the due date
         selectDueDateButton.setOnClickListener {
             // Get the current date
             val calendar = Calendar.getInstance()
@@ -37,7 +40,7 @@ class CreateTaskActivity : AppCompatActivity() {
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-            // Show DatePickerDialog
+            // Show the date picker
             val datePicker = DatePickerDialog(
                 this,
                 { _, selectedYear, selectedMonth, selectedDay ->
@@ -50,6 +53,8 @@ class CreateTaskActivity : AppCompatActivity() {
             )
             datePicker.show()
         }
+
+        // Sets up the timer for the due date
         selectTimerButton.setOnClickListener {
             val calendar = Calendar.getInstance()
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -59,8 +64,8 @@ class CreateTaskActivity : AppCompatActivity() {
                 this,
                 { _, selectedHour, selectedMinute ->
                     val formattedTime = formatTime(selectedHour, selectedMinute)
-                    selectedTimer = formattedTime
-                    timerDisplay.text = "Timer: $selectedTimer"
+                    selectedTimer = "$selectedHour:$selectedMinute" // Store in 24-hour format
+                    timerDisplay.text = "Timer: $formattedTime"
                 },
                 hour,
                 minute,
@@ -68,26 +73,36 @@ class CreateTaskActivity : AppCompatActivity() {
             )
             timePicker.show()
         }
-        // Set up "Create Task" button
+
+        // Sets up the create task button
         createButton.setOnClickListener {
             val taskName = taskNameEditText.text.toString()
-            if (taskName.isNotEmpty() && selectedDueDate != null) {
-                val currentDate = System.currentTimeMillis()
 
-                // nick add
-                saveTaskToSharedPreferences(taskName, selectedDueDate!!)
+            if (taskName.isNotEmpty() && selectedDueDate != null && selectedTimer != null) {
+                // Combine date and time
+                val combinedDueDateStr = "$selectedDueDate $selectedTimer"
 
-                val resultIntent = Intent().apply {
-                    putExtra("TASK_NAME", taskName)
-                    putExtra("PLANT_IMAGE", selectedPlantResId)
-                    putExtra("CREATION_DATE", currentDate)
-                    putExtra("DUE_DATE", selectedDueDate)
+                // Parse the combined date and time
+                val combinedDueDate = try {
+                    SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault()).parse(combinedDueDateStr)?.time
+                } catch (e: Exception) {
+                    null
                 }
-                setResult(Activity.RESULT_OK, resultIntent)
-                finish()
+
+                if (combinedDueDate == null || combinedDueDate <= System.currentTimeMillis() + 10000) {
+                    dueDateDisplay.text = "Invalid or past due date!"
+                } else {
+                    val resultIntent = Intent().apply {
+                        putExtra("TASK_NAME", taskName)
+                        putExtra("PLANT_IMAGE", selectedPlantResId)
+                        putExtra("DUE_DATE", combinedDueDateStr) // Send the full date-time string
+                    }
+                    setResult(Activity.RESULT_OK, resultIntent)
+                    finish()
+                }
             } else {
-                if (selectedDueDate == null) {
-                    dueDateDisplay.text = "Please select a due date!"
+                if (selectedDueDate == null || selectedTimer == null) {
+                    dueDateDisplay.text = "Please select both due date and time!"
                 }
             }
         }
@@ -103,23 +118,5 @@ class CreateTaskActivity : AppCompatActivity() {
         val amPm = if (hour < 12) "AM" else "PM"
         val adjustedHour = if (hour % 12 == 0) 12 else hour % 12
         return String.format("%d:%02d %s", adjustedHour, minute, amPm)
-    }
-
-    private fun saveTaskToSharedPreferences(taskName: String, dueDate: String) {
-        val sharedPreferences = getSharedPreferences("TaskPrefs", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-
-        val savedTasks = sharedPreferences.getString("TASK_LIST", null)
-        val taskList = mutableListOf<String>()
-
-        if (savedTasks != null) {
-            taskList.addAll(savedTasks.split(";").filter { it.isNotBlank() })
-        }
-
-        val newTask = "$taskName|$dueDate"
-        taskList.add(newTask)
-
-        editor.putString("TASK_LIST", taskList.joinToString(";"))
-        editor.apply()
     }
 }
