@@ -33,6 +33,7 @@ class TaskManagerActivity : AppCompatActivity() {
             val dueDateString = result.data?.getStringExtra("DUE_DATE")
             val dueDate = try {
                 // Initialize the due date variable to hold both the DATE and the TIME for the due date of the task
+                //Using a SimplDateFormat to parse the text into a date.
                 SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).parse(dueDateString)?.time
             } catch (e: Exception) {
                 null
@@ -41,7 +42,7 @@ class TaskManagerActivity : AppCompatActivity() {
             //if the due date is empty OR if the due date is set to before the current date notify the user.
             if (dueDate == null || dueDate <= System.currentTimeMillis() + 10000) {
                 Toast.makeText(this, "Invalid or past due date.", Toast.LENGTH_SHORT).show()
-            } else { //Otherwise add the task to the list.
+            } else { //Otherwise add the task to the list and set the alarm.
                 val task = Task(newTaskName!!, dueDate)
                 taskList.add(task)
                 adapter.notifyDataSetChanged()
