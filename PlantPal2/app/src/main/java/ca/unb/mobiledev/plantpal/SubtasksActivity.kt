@@ -18,6 +18,8 @@ class SubtasksActivity : AppCompatActivity() {
 
     private val subtaskList = mutableListOf<String>()
     private lateinit var adapter: ArrayAdapter<String>
+    private val taskName: String by lazy { intent.getStringExtra("TASK_NAME") ?: "" }
+    private val subtaskMap = mutableMapOf<String, MutableList<String>>()
 
     private val addSubtaskLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -73,15 +75,20 @@ class SubtasksActivity : AppCompatActivity() {
     private fun saveSubTasks() {
         val sharedPreferences = getSharedPreferences("SubTaskPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        editor.putString("SUBTASK_LIST", subtaskList.joinToString(";"))
+        subtaskMap[taskName] = subtaskList
+        editor.putString(taskName, subtaskList.joinToString(";"))
         editor.apply()
     }
 
     private fun loadSubTasks() {
         val sharedPreferences = getSharedPreferences("SubTaskPrefs", Context.MODE_PRIVATE)
-        val savedSubTasks = sharedPreferences.getString("SUBTASK_LIST", null)
+        val savedSubTasks = sharedPreferences.getString(taskName, null)
         if (savedSubTasks != null) {
-            subtaskList.addAll(savedSubTasks.split(";").filter { it.isNotBlank() })
+            subtaskMap[taskName] = savedSubTasks.split(";").filter { it.isNotBlank() }.toMutableList()
+        } else {
+            subtaskMap[taskName] = mutableListOf()
         }
+        subtaskList.clear()
+        subtaskList.addAll(subtaskMap[taskName] ?: emptyList())
     }
 }
