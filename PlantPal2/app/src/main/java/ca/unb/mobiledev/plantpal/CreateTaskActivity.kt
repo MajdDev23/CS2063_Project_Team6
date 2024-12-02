@@ -29,8 +29,8 @@ class CreateTaskActivity : AppCompatActivity() {
         val createButton = findViewById<Button>(R.id.btn_create_task)
         val selectDueDateButton = findViewById<Button>(R.id.select_due_date_btn)
         val dueDateDisplay = findViewById<TextView>(R.id.due_date_display)
-        val selectTimerButton = findViewById<Button>(R.id.select_timer_btn)
-        val timerDisplay = findViewById<TextView>(R.id.timer_display)
+        val selectTimerButton = findViewById<Button>(R.id.set_alarm_btn)
+        val timerDisplay = findViewById<TextView>(R.id.alarm_display)
 
         // Sets up the button to select the due date
         selectDueDateButton.setOnClickListener {

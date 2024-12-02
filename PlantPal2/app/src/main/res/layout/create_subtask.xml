@@ -33,6 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:backgroundTint="#4A8C61"
-        android:text="Create new subtask"
+        android:text="Create New Subtask"
         android:textColor="#F8F4F4"/>
 </LinearLayout>
