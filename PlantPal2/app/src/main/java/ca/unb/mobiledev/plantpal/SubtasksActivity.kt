@@ -13,11 +13,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class SubtasksActivity : AppCompatActivity() {
 
     private val subtaskList = mutableListOf<String>()
-    private lateinit var adapter: ArrayAdapter<String>
+    private lateinit var adapter: SubtaskAdapter
     private val taskName: String by lazy { intent.getStringExtra("TASK_NAME") ?: "" }
     private val subtaskMap = mutableMapOf<String, MutableList<String>>()
 
@@ -29,12 +32,8 @@ class SubtasksActivity : AppCompatActivity() {
             newSubtaskName?.let {
                 subtaskList.add(it)
                 adapter.notifyDataSetChanged()
-                val text = "Subtask added."
-                val duration = Toast.LENGTH_SHORT
-                val toast = Toast.makeText(this,text,duration)
-                toast.show()
+                Toast.makeText(this, "Subtask added.", Toast.LENGTH_SHORT).show()
             }
-            Toast.makeText(this, "Subtask added.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -42,22 +41,16 @@ class SubtasksActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subtasks)
         loadSubTasks()
-        val taskName = intent.getStringExtra("TASK_NAME")
+
         val titleTextView = findViewById<TextView>(R.id.subtask_title)
         titleTextView.text = "Subtasks for: $taskName"
 
-        val subtaskListView = findViewById<ListView>(R.id.subtasks_list)
-        adapter = object : ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, subtaskList) {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val view = super.getView(position, convertView, parent)
-                val textView = view.findViewById<TextView>(android.R.id.text1)
+        val recyclerView = findViewById<RecyclerView>(R.id.subtasks_recycler_view)
+        adapter = SubtaskAdapter(subtaskList)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
-                // Change the text color for each subtask to #4A8C61
-                textView.setTextColor(Color.parseColor("#4A8C61"))
-                return view
-            }
-        }
-        subtaskListView.adapter = adapter
+        setupSwipeToDelete(recyclerView)
 
         val createSubtaskButton = findViewById<Button>(R.id.subtasks_btn)
         createSubtaskButton.setOnClickListener {
@@ -67,10 +60,34 @@ class SubtasksActivity : AppCompatActivity() {
 
         val backButton = findViewById<Button>(R.id.home_btn)
         backButton.setOnClickListener {
+            val backIntent = Intent(this, TaskManagerActivity::class.java)
             saveSubTasks()
             finish()
+            startActivity(backIntent)
         }
     }
+
+    //function to let user swipe left to delete subtasks
+    private fun setupSwipeToDelete(recyclerView: RecyclerView) {
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean = false
+
+            //When the app registers a swipe gesture from the user, moves the subtask item to the left
+            //and it removes the subtask from the list
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                adapter.removeItem(position) // Call the adapter's removeItem method
+                Toast.makeText(this@SubtasksActivity, "Subtask deleted.", Toast.LENGTH_SHORT).show()
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
 
     private fun saveSubTasks() {
         val sharedPreferences = getSharedPreferences("SubTaskPrefs", Context.MODE_PRIVATE)

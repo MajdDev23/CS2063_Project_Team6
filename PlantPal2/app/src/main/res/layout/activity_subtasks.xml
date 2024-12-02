@@ -5,6 +5,7 @@
     android:padding="16dp"
     android:background="#a7d9a6">
 
+    <!-- Title Text -->
     <TextView
         android:id="@+id/subtask_title"
         android:layout_width="wrap_content"
@@ -14,13 +15,16 @@
         android:text="Subtasks for: Task Name"
         android:textColor="#4A8C61"/>
 
-    <ListView
-        android:id="@+id/subtasks_list"
+    <!-- RecyclerView for displaying subtasks -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/subtasks_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:textColor="#4A8C61"/>
+        android:padding="8dp"
+        android:scrollbars="vertical"/>
 
+    <!-- Button to add a new subtask -->
     <Button
         android:id="@+id/subtasks_btn"
         android:layout_width="wrap_content"
@@ -29,6 +33,7 @@
         android:backgroundTint="#4A8C61"
         android:text="Add Subtask" />
 
+    <!-- Button to go back -->
     <Button
         android:id="@+id/home_btn"
         android:layout_width="wrap_content"
