@@ -16,10 +16,10 @@ the timer gets does not function as intended. And it sounds the alarm at differe
 Completed features include: 
 
 Creating tasks  
-A calendar to choose the due date for a task 
-A timer that goes off once the due date has been reached 
-Checking tasks off to know which you’ve finished 
-A button to delete all checked tasks 
-Subtask creation 
-Linking subtasks to a main task 
-Deleting subtasks by swiping (touch gesture – substantial functionality) 
+A calendar to choose the due date for a task, 
+A timer that goes off once the due date has been reached,  
+Checking tasks off to know which you’ve finished, 
+A button to delete all checked tasks, 
+Subtask creation, 
+Linking subtasks to a main task, 
+Deleting subtasks by swiping (touch gesture – substantial functionality).
