@@ -22,7 +22,53 @@ class TaskManagerActivity : AppCompatActivity() {
     private val taskList = mutableListOf<Task>()
     private lateinit var adapter: TaskAdapter
     private var selectedPlantResId: Int? = null
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_task_manager)
 
+        //Loads up the saved tasks
+        loadTasks()
+        val recyclerView = findViewById<RecyclerView>(R.id.tasks_list)
+
+
+        adapter = TaskAdapter(taskList) { task ->
+            val intent = Intent(this, SubtasksActivity::class.java)
+            intent.putExtra("TASK_NAME", task.name) // Pass the task's name
+            startActivity(intent)
+        }
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        //Button to create tasks
+        val createTaskButton = findViewById<Button>(R.id.create_task_btn)
+        createTaskButton.setOnClickListener {
+            val createTaskIntent = Intent(this, CreateTaskActivity::class.java)
+            addTaskLauncher.launch(createTaskIntent)
+        }
+
+        //Button to delete tasks
+        val deleteTaskButton = findViewById<Button>(R.id.delete_task_btn)
+        deleteTaskButton.setOnClickListener {
+            val selectedCount = adapter.getSelectedTaskCount()
+            if (selectedCount == 0) {
+                Toast.makeText(this, "No tasks selected!", Toast.LENGTH_SHORT).show()
+            } else {
+                adapter.deleteSelectedTasks()
+                saveTasks() //Saves tasks
+                Toast.makeText(this, "Tasks deleted!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        //Button to return to main menu
+        val backButton = findViewById<Button>(R.id.home_btn)
+        backButton.setOnClickListener {
+            val backIntent = Intent(this, MainActivity::class.java)
+            backIntent.putExtra("PLANT_IMAGE", selectedPlantResId)
+            setResult(RESULT_OK, backIntent)
+            startActivity(backIntent)
+        }
+    }
     @SuppressLint("NotifyDataSetChanged")
     private val addTaskLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -101,53 +147,6 @@ class TaskManagerActivity : AppCompatActivity() {
         Toast.makeText(this, "Alarm set for $taskName", Toast.LENGTH_SHORT).show()
     }
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_task_manager)
-
-        //Loads up the saved tasks
-        loadTasks()
-        val recyclerView = findViewById<RecyclerView>(R.id.tasks_list)
-
-
-        adapter = TaskAdapter(taskList) { task ->
-            val intent = Intent(this, SubtasksActivity::class.java)
-            intent.putExtra("TASK_NAME", task.name) // Pass the task's name
-            startActivity(intent)
-        }
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        //Button to create tasks
-        val createTaskButton = findViewById<Button>(R.id.create_task_btn)
-        createTaskButton.setOnClickListener {
-            val createTaskIntent = Intent(this, CreateTaskActivity::class.java)
-            addTaskLauncher.launch(createTaskIntent)
-        }
-
-        //Button to delete tasks
-        val deleteTaskButton = findViewById<Button>(R.id.delete_task_btn)
-        deleteTaskButton.setOnClickListener {
-            val selectedCount = adapter.getSelectedTaskCount()
-            if (selectedCount == 0) {
-                Toast.makeText(this, "No tasks selected!", Toast.LENGTH_SHORT).show()
-            } else {
-                adapter.deleteSelectedTasks()
-                saveTasks() //Saves tasks
-                Toast.makeText(this, "Tasks deleted!", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        //Button to return to main menu
-        val backButton = findViewById<Button>(R.id.home_btn)
-        backButton.setOnClickListener {
-            val backIntent = Intent(this, MainActivity::class.java)
-            backIntent.putExtra("PLANT_IMAGE", selectedPlantResId)
-            setResult(RESULT_OK, backIntent)
-            startActivity(backIntent)
-        }
-    }
 
     //Function to save tasks using shared preferences
     private fun saveTasks() {
