@@ -22,7 +22,7 @@ class TaskManagerActivity : AppCompatActivity() {
     private val taskList = mutableListOf<Task>()
     private lateinit var adapter: TaskAdapter
     private var selectedPlantResId: Int? = null
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_manager)

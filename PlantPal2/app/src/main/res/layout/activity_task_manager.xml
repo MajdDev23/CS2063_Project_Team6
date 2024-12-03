@@ -6,6 +6,16 @@
     android:background="#a7d9a6">
 
     <!-- Back to Main Button -->
+    <Button
+        android:id="@+id/home_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="16dp"
+        android:backgroundTint="#4A8C61"
+        android:text="Home"
+        android:textColor="#F8F4F4"/>
 
     <!-- Delete Button -->
     <Button
@@ -26,7 +36,6 @@
         android:textColor="#4A8C61"/>
 
     <!-- Button to create a new task -->
-
     <Button
         android:id="@+id/create_task_btn"
         android:layout_width="wrap_content"
@@ -35,16 +44,5 @@
         android:backgroundTint="#4A8C61"
         android:text="New Task"
         android:textColor="#F8F4F4"/>
-
-    <Button
-        android:id="@+id/home_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="16dp"
-        android:backgroundTint="#4A8C61"
-        android:text="Home"
-        android:textColor="#F8F4F4" />
 
 </LinearLayout>
