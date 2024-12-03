@@ -4,24 +4,34 @@
     android:background="#a7d9a6">
 
     <!-- Customize Button -->
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/plant_space"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="-43dp"
+        android:text="PlantPal"
+        android:textColor="#4A8C61"
+        android:textSize="30sp" />
+
+
+    <!-- Create New Task Button -->
+
     <Button
         android:id="@+id/customize_btn"
         android:layout_width="126dp"
         android:layout_height="36dp"
+        android:layout_below="@id/newTask_btn"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="46dp"
         android:backgroundTint="#4A8C61"
         android:text="Customize plant"
         android:textColor="#F8F4F4" />
 
-
-    <!-- Create New Task Button -->
     <Button
         android:id="@+id/newTask_btn"
         android:layout_width="wrap_content"
@@ -34,17 +44,21 @@
         android:textColor="#F8F4F4" />
 
     <!-- Camera Button -->
+
+    <!-- Placeholder for the Plant (Initially empty) -->
+
     <Button
         android:id="@+id/camera_btn"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_below="@id/newTask_btn"
+        android:layout_alignRight="@id/newTask_btn"
+        android:layout_marginTop="45dp"
+        android:layout_marginRight="-112dp"
         android:backgroundTint="#4A8C61"
         android:text="Camera"
         android:textColor="#F8F4F4" />
 
-    <!-- Placeholder for the Plant (Initially empty) -->
     <ImageView
         android:id="@+id/plant_space"
         android:layout_width="280dp"

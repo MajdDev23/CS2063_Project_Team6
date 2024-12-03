@@ -6,16 +6,15 @@
     android:padding="16dp"
     android:background="#a7d9a6">
 
-    <!-- Back button -->
     <Button
         android:id="@+id/back_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:backgroundTint="#4A8C61"
         android:text="Back"
-        android:textColor="#F8F4F4"/>
+        android:textColor="#F8F4F4" />
 
-    <!-- Subtask name input -->
     <EditText
         android:id="@+id/subtask_text"
         android:layout_width="match_parent"
@@ -34,5 +33,5 @@
         android:layout_gravity="center_horizontal"
         android:backgroundTint="#4A8C61"
         android:text="Create New Subtask"
-        android:textColor="#F8F4F4"/>
+        android:textColor="#F8F4F4" />
 </LinearLayout>

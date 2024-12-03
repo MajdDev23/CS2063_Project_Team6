@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class TaskAdapter(
-    private val tasks: MutableList<TaskManagerActivity.Task>, // Change from MutableList<String> to MutableList<Task>
+    private val tasks: MutableList<TaskManagerActivity.Task>,
     private val selectedTasks: MutableSet<Int> = mutableSetOf(),
     private val onTaskClick: (TaskManagerActivity.Task) -> Unit // Pass the whole Task object
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
@@ -34,7 +34,7 @@ class TaskAdapter(
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = tasks[position]
-        holder.taskText.text = task.name // Use the `name` property of `Task`
+        holder.taskText.text = task.name // Use the name property of Task
         holder.taskText.setTextColor(Color.parseColor("#4A8C61"))
         holder.checkBox.isChecked = selectedTasks.contains(position)
 
